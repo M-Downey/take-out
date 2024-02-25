@@ -54,6 +54,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             return true;
         } catch (Exception ex) {
             //4、不通过，响应401状态码
+            log.info("jwt校验错误");
             response.setStatus(401);
             return false;
         }
