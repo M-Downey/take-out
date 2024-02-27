@@ -24,5 +24,14 @@
         </set>
         where id = #{id}
     </update>
+    <select id="pageQuery" resultType="com.sky.vo.SetmealVO">
+        select s.*, c.name as categoryName
+        from setmeal as s left join category as c on s.category_id = c.id
+        <where>
+            <if test="name != null">and s.name like concat('%', #{name}, '%')</if>
+            <if test="status != null">and s.status = #{status}</if>
+            <if test="categoryId != null">and s.category_id = #{categoryId}</if>
+        </where>
+    </select>
 
 </mapper>
