@@ -7,6 +7,7 @@ import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
@@ -130,5 +131,31 @@ public class SetmealServiceImpl implements SetmealService {
             setmealDish.setSetmealId(setmealId);
         });
         setmealDishMapper.insertBatch(setmealDishList);
+    }
+
+    /**
+     * 套餐起售停售
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        // 套餐起售时包含有停售的菜品，抛出异常
+        if (status == StatusConstant.ENABLE) {
+            List<Dish> dishList = dishMapper.getBySetmealId(id);
+            if (dishList != null && !dishList.isEmpty()) {
+                dishList.forEach(dish -> {
+                    if (dish.getStatus() == StatusConstant.DISABLE) {
+                        throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ENABLE_FAILED);
+                    }
+                });
+            }
+        }
+        // 根据id修改套餐的 status
+        Setmeal setmeal = Setmeal.builder()
+                        .id(id)
+                        .status(status)
+                        .build();
+        setmealMapper.update(setmeal);
     }
 }
