@@ -22,7 +22,7 @@ import java.util.List;
 public class DishController {
 
     @Autowired
-    DishService dishService;
+    private DishService dishService;
 
     /**
      * 新增菜品
@@ -101,5 +101,18 @@ public class DishController {
         log.info("菜品id：{}要修改销售状态为：{}", status, id);
         dishService.startOrStop(status, id);
         return Result.success();
+    }
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/list")
+    @ApiOperation("根据分类id查询菜品")
+    public Result<List<Dish>> getByCategoryId(@RequestParam Long categoryId){
+        log.info("根据分类id查询菜品：{}", categoryId);
+        List<Dish> dishList = dishService.list(categoryId);
+        return Result.success(dishList);
     }
 }
