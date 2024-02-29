@@ -44,17 +44,17 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
 
         //2、校验令牌
         try {
-            log.info("jwt校验：{}", token);
+            log.info("管理端jwt校验：{}", token);
             Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);
             Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
-            log.info("当前员工id：{}", empId);
+            log.info("当前管理端员工id：{}", empId);
             // 将登录用户 id 存储到线程局部变量中
             BaseContext.setCurrentId(empId);
             //3、通过，放行
             return true;
         } catch (Exception ex) {
             //4、不通过，响应401状态码
-            log.info("jwt校验错误");
+            log.info("管理端jwt校验错误");
             response.setStatus(401);
             return false;
         }
