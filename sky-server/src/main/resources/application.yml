@@ -60,4 +60,8 @@ sky:
     weChatPayCertFilePath: ${sky.wechat.weChatPayCertFilePath}
     notifyUrl: ${sky.wechat.notifyUrl}
     refundNotifyUrl: ${sky.wechat.refundNotifyUrl}
+  shop:
+    address: 湖北省武汉市武昌区八一路299号
+  baidu:
+    ak: DNGfe9wEO8spWI9weQwy7SzeajfyOvC8
 
