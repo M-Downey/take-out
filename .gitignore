@@ -1,6 +1,6 @@
 **/target/
 .idea
-*.yml
+sky-server/src/main/resources/*.yml
 *.iml
 *.class
 *Test.java
